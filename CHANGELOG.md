@@ -1,0 +1,314 @@
+# Changelog
+
+
+## v2.0.0 (2026-10-23)
+
+### Changes
+
+* Project version set to `2.0.0`.
+
+* Project maintenance transferred to Mark Mortensen, repository moved to <https://github.com/itkoncept/wpkg-express-2>.
+
+* Added authors `Brian White` (original author), `Andrey Klimov` and `Mark Mortensen` (maintainer) to `composer.json` and to the project footer.
+
+* Java runtime (`java-1.8.0-openjdk-headless`) is now required and installed on the server for the YUI Compressor asset filters used by the `AssetCompress` plugin.
+
+### PHP 8.x compatibility
+
+The project (based on CakePHP 2.10.20, which upstream never made PHP 8 compatible) now runs on PHP 8.0–8.4. Tested against PHP 8.4.
+
+* Converted all removed curly-brace string/array offset syntax (`$str{0}` -> `$str[0]`) in CakePHP core and vendored libraries (`LangCorrect/UTF8.php`, `Folder.php`, `HttpSocket.php`, `FormHelper.php`, `i_cal_object.php`, `ConsoleOptionParser.php` and others).
+* Removed classes named after PHP reserved words: Zend `Filter\Int` / `Filter\Null` backwards-compat stubs (dead code, no references) and the empty `String` utility shim from CakePHP core (`String` is reserved since PHP 7; `CakeText` is the real class).
+* Renamed `app/Model/Attribute.php` to `app/Model/WpkgAttribute.php` (`Attribute` is a reserved class name since PHP 8.0) and updated all references.
+* Removed `&new` by-reference instantiation in Horde `Text_Diff` renderer (`$block[] = &new X` is no longer valid syntax).
+* Fixed compile-time fatal `Cannot acquire reference to $GLOBALS` in the vendored PHPUnit `Configuration.php` (references to `$GLOBALS` removed since PHP 8.1).
+* Fixed `heredoc` blocks in `sebastian/diff` tests where the body contained a line matching the closing identifier (` A`), which PHP 7.3+ rejects; identifiers renamed (`EOTA`).
+* Fixed removed `implode()` argument order (array first, glue second) in `ConsoleOutput.php`, `CompletionShell.php`, `PhpTagShell.php`, `SluggedBehavior.php` and others (deprecated in PHP 7.4, fatal in PHP 8.0).
+* `ObjectCollection::trigger()` now passes `array_values(...)` to `call_user_func_array()`: PHP 8 rejects argument arrays with string keys, which broke every `initialize`/event trigger.
+* Added PHP 8 compat polyfills to `app/Config/bootstrap.php` for `utf8_encode()`, `utf8_decode()` (removed in PHP 8.2) and `each()` (removed in PHP 8.0), used by the `Tools` plugin (Horde, `FileLib`, `CssToInlineStyles`).
+* Hardened `LdapSource` against PHP 8 warnings-turned-fatal: null/`isset` checks for LDAP schema lookups.
+
+### Fix
+
+* Fixed broken theme assets: recreated missing symlink `app/webroot/cake_theme` -> `app/Plugin/CakeTheme/webroot`, all CSS and JS files returned HTTP 404 and the site was rendered without styling.
+
+* Rebuilt all compiled CSS/JS asset bundles with `cake AssetCompress.AssetCompress build -f` and reset the stale AssetCompress build-time registry in `app/tmp`, so generated asset file names match the timestamps used by the theme helper.
+
+* Fixed WPI configuration file download links (`Configuration of WPI` and `Configuration of WPKG for WPI`) in the navigation menu: cleared the inherited plugin prefix (`'plugin' => null` in `app/View/Elements/barNav.ctp`) that produced a broken URL (`/admin/cake_settings_app/wpi/download/config.js`) on the Settings and Queues pages.
+
+
+## v1.1.0-rc.1 (2020-10-25)
+
+### New
+
+* Added autocompletion when editing XML based on XSD schema.
+
+* Added the ability to edit XML packages, profiles and hosts.
+
+* Added saving the state of tables in bookmarks.
+
+### Changes
+
+* Improved updating of parent information change time when changing child information.
+
+### Fix
+
+* Fixed updating the modal window when deleting a dependency list item.
+
+
+## v1.0.12 (2020-09-20)
+
+### New
+
+* Added support for alternative directory services.
+
+### Fix
+
+* Fixed internal authentication issue after saving settings.
+
+
+## v1.0.11 (2020-04-02)
+
+### Fix
+
+* Updated `CakeInstaller` plugin.
+
+
+## v1.0.10-rc.1 (2019-12-08)
+
+### New
+
+* Added support for PostgreSQL.
+
+* Added support for negative exit codes.
+
+### Changes
+
+* Added support for PHP 7.3.
+
+### Fix
+
+* Fixed support for exit codes `*` and `any`
+
+* Fixed download WPI configuration files.
+
+* Added admin contacts to login page.
+
+* Fixed import of check type `Host` with the condition `Host name`
+
+
+## v1.0.9 (2019-05-03)
+
+### Fix
+
+* Fixed the `duration` cache settings for methods to retrieving list information of computers.
+
+
+## v1.0.8 (2019-03-29)
+
+### Changes
+
+* Added percentage of packages to version chart of installed packages.
+
+### Fix
+
+* Fixed message `...And n more records` in the error report sent by email.
+
+* Fixed using exit code directory on parsing log files.
+
+
+## v1.0.7 (2019-03-22)
+
+### Changes
+
+* Changed the display of the start time for installation and removal package.
+
+* Added highlighting of embedded checks in italics.
+
+* Improved display of tabular information.
+
+### Fix
+
+* Fixed invalidation of OPCache files when clearing the View cache.
+
+
+## v1.0.6 (2019-03-18)
+
+### New
+
+* Added the ability to edit the exit code directory.
+
+### Fix
+
+* Fixed updating the exit code directory from XML.
+
+
+## v1.0.5 (2019-03-15)
+
+### New
+
+* Added feature to creates an XML configuration for WPKG using an editor with validating XML schema.
+
+### Changes
+
+* Improved display of tabular information.
+
+### Fix
+
+* Fixed display of long information about packages.
+
+
+## v1.0.4 (2019-03-07)
+
+### Fix
+
+* Fixed XML package template file `PACKAGE_TEMPLATE.xml`
+
+* Fixed clearing notes when creating data from a template.
+
+* Fixed downloading XML configuration files for WPI.
+
+
+## v1.0.3 (2019-03-05)
+
+### New
+
+* Added feature of exit code directory.
+
+* Added feature to preview logs of host.
+
+
+## v1.0.2 (2019-02-08)
+
+### Changes
+
+* Added validation of SMB application settings.
+
+
+## v1.0.1 (2019-02-04)
+
+### Fix
+
+* Fixed parsing of logs and reports files without settings.
+
+* Replacing OpenSSL instead of outdated mcrpyt extension.
+
+
+## v1.0.0 (2019-02-01)
+
+### New
+
+* Added feature to remove an item from the list of dependencies when viewing information.
+
+### Fix
+
+* Fixed confirmation of actions.
+
+* Fixed the filter row checkbox in the WPI package table.
+
+
+## v1.0.0-rc.1 (2019-01-29)
+
+### New
+
+* Added feature to view the version chart of the installed package.
+
+* Added feature to parse report files containing the console output of the command `cscript.exe wpkg.js //NoLogo /query:iml`
+
+### Changes
+
+* Updated the feature to use WPI to quickly test WPKG packages.
+
+### Fix
+
+* Fixed the Controller name in the list of hosts containing the current profile as the main profile.
+
+* Fixed sorting direction when paginating `Logs` data.
+
+
+## v1.0.0-beta.4 (2018-12-28)
+
+### New
+
+* Added feature to change, import and export package attributes `precheck-*`
+
+* Added feature changing installation date of package in profile.
+
+### Changes
+
+* Removed default value of package attributes `notify` and `execute` from XML.
+
+* Added auto-complete computer name from LDAP to generate graph of this computer.
+
+* Updated tooltip for form input items.
+
+* Added parent change on drag and drop check item.
+
+* Added input mask for the check condition of the `File date` form.
+
+* Added a list of check values for the host: `OS`, `Architecture`, `Language ID` and `Language ID OS`
+
+* Updated autocomplete for checks, variables, and package actions.
+
+### Fix
+
+* Fixed attribute `expandURL` for the package action `Download`
+
+* Fixed display empty timeout of command.
+
+* Fixed case sensitively for ID of package, profile and host.
+
+* Fixed clearing value of group action in filter form.
+
+* Fixed disabling browser cache on displaying XML configurations.
+
+* Fixed clearing of the View files cache after saving application settings.
+
+* Fixed XML configuration on disabled XML output.
+
+
+## v1.0.0-beta.3 (2018-12-04)
+
+### New
+
+* Added feature to disable unused hosts and profiles.
+
+### Changes
+
+* Added translation for message type from task queue.
+
+### Fix
+
+* Fixed exporting package note for WPI.
+
+* Fixed checking the ability to perform operations `delete` or `disable`
+
+* Fixed internal authentication.
+
+
+## v1.0.0-beta.2 (2018-11-30)
+
+### Changes
+
+* Added static text describing the valid type of XML file in the form of uploading XML files.
+
+### Fix
+
+* Fixed parsing logs for open files.
+
+* Fixed importing XML for new records.
+
+* Fixed clearing the cache when a transaction is rolled back when importing a package and client database.
+
+* Fixed determination of the client database XML file for the `checkResults` element when importing XML.
+
+* Fixed getting the ID of the last processed entry when importing XML and log files.
+
+
+## v1.0.0-beta (2018-11-29)
+
+### Fix
+
+* Fixed deletion of related attributes along with global variables.
+
+
