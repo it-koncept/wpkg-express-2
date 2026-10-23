@@ -6,7 +6,7 @@ App::uses('HttpSocketResponse', 'Network/Http');
 
 # google maps
 Configure::write('Google', [
-	'key' => 'ABQIAAAAk-aSeht5vBRyVc9CjdBKLRRnhS8GMCOqu88EXp1O-QqtMSdzHhQM4y1gkHFQdUvwiZgZ6jaKlW40kw',	//local
+	'key' => '[GOOGLE-MAPS-V2-LOCAL-API-KEY-REDACTED]',	//local
 	'api' => '2.x',
 	'zoom' => 16,
 	'lat' => null,
