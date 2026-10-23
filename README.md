@@ -64,8 +64,9 @@ See the project [presentation](https://anklimsk.github.io/wpkg-express-2/present
 ## Requirements
 
 - Apache module `mod_rewrite`;
-- PHP `5.4` or greater (up to `7.4`);
-- PHP Extensions: `pdo`, `ldap`, `bz2`, `xml` and `openssl`;
+- PHP `7.3` or greater (tested through `8.4`; this fork's PHP 8 fixes
+  require at least `7.3`);
+- PHP Extensions: `pdo`, `ldap`, `bz2`, `xml`, `openssl` and `mbstring`;
 - Ldap server (`Active Directory`, `Samba` or `OpenLDAP`) to authenticate
   (only `Active Directory`) and get a list of computers to create `Profiles` and `Hosts`
   based on a template;
@@ -82,12 +83,14 @@ See the project [presentation](https://anklimsk.github.io/wpkg-express-2/present
 
 ## Installation
 
-1. Install WPKG Express 2 using composer:
-  `composer create-project anklimsk/wpkg-express-2 /var/www/wpkg`,
+1. Get the sources of this PHP 8 compatible fork:
+  `git clone https://github.com/itkoncept/wpkg-express-2.git /var/www/wpkg`,
   where `/var/www/wpkg` is Document Root directory.
-  Or just download the [latest release](https://github.com/anklimsk/wpkg-express-2/releases/latest)
-  from [releases](https://github.com/anklimsk/wpkg-express-2/releases) and extract
+  Or download the [latest release](https://github.com/itkoncept/wpkg-express-2/releases/latest)
+  from [releases](https://github.com/itkoncept/wpkg-express-2/releases) and extract
   the archive to the Document Root directory.
+  (Do **not** use `composer create-project anklimsk/wpkg-express-2` — that installs
+  the unmaintained upstream version without the PHP 8 fixes.)
 2. Set the [DocumentRoot](https://httpd.apache.org/docs/trunk/mod/core.html#documentroot)
   directive for the domain to [`/var/www/wpkg/app/webroot`](https://book.cakephp.org/2/en/installation.html#production).
 3. Make sure that an `.htaccess` [override is allowed](https://book.cakephp.org/2/en/installation/url-rewriting.html#apache-and-mod-rewrite-and-htaccess)
@@ -106,10 +109,10 @@ See the project [presentation](https://anklimsk.github.io/wpkg-express-2/present
 4. If you are using OPcache you should set the [opcache.blacklist_filename](https://www.php.net/manual/en/opcache.configuration.php#ini.opcache.blacklist-filename)
   configuration value with a file path to your blacklist (View cache):
   - For example, create a new file:
-    `/etc/php/7.4/apache2/opcache-blacklist.txt`;
+    `/etc/php/8.4/apache2/opcache-blacklist.txt`;
   - Specify the path for excluding files, e.g.: `/var/www/wpkg/app/tmp/cache/views/wpkg_*.php`;
   - Add the blacklist file path to your `php.ini` file:
-    `opcache.blacklist_filename=/etc/php/7.4/apache2/opcache-blacklist.txt`;
+    `opcache.blacklist_filename=/etc/php/8.4/apache2/opcache-blacklist.txt`;
   - Reload apache configuration: `sudo service apache2 reload`.
 5. Navigate to the directory `app` application (`/var/www/wpkg/app`),
   and run the following command: `sudo ./Console/cake CakeInstaller`
