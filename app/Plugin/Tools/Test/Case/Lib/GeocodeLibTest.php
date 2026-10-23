@@ -27,7 +27,7 @@ class GeocodeLibTest extends MyCakeTestCase {
 				'language' => 'en',
 				'bounds' => '',
 				'sensor' => 'false',
-				'key' => 'AIzaSyAcQWSeMp_RF9W2_g2vOfLlUNCieHtHfFA',
+				'key' => '[GOOGLE-API-KEY-REDACTED]',
 				'result_type' => 'sublocality'
 			]
 		],
